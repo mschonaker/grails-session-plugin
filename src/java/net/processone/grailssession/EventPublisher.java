@@ -2,6 +2,11 @@ package net.processone.grailssession;
 
 import javax.servlet.http.HttpSession;
 
+import net.processone.grailssession.event.SessionCreatedEvent;
+import net.processone.grailssession.event.SessionDestroyedEvent;
+import net.processone.grailssession.event.SessionDidActivateEvent;
+import net.processone.grailssession.event.SessionWillPassivateEvent;
+
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.ApplicationEventPublisher;
 
@@ -27,17 +32,26 @@ public class EventPublisher implements ApplicationEventPublisherAware {
 
 	public void publishSessionCreated(HttpSession session) {
 
+		eventPublisher.publishEvent(new SessionCreatedEvent(this, session));
+
 	}
 
 	public void publishSessionDestroyed(HttpSession session) {
+
+		eventPublisher.publishEvent(new SessionDestroyedEvent(this, session));
 
 	}
 
 	public void publishSessionDidActivate(HttpSession session) {
 
+		eventPublisher.publishEvent(new SessionDidActivateEvent(this, session));
+
 	}
 
 	public void publishSessionWillPassivate(HttpSession session) {
+
+		eventPublisher
+				.publishEvent(new SessionWillPassivateEvent(this, session));
 
 	}
 }

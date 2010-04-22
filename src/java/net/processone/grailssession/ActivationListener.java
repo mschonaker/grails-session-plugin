@@ -3,7 +3,7 @@ package net.processone.grailssession;
 import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionEvent;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.context.ApplicationContext; 
+import org.springframework.context.ApplicationContext;
 
 public class ActivationListener implements HttpSessionActivationListener {
 
