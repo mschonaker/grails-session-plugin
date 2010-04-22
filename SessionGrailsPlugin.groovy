@@ -40,7 +40,11 @@ Brief description of the plugin.
     }
 
     def doWithSpring = {
-        // TODO Implement runtime spring config (optional)
+    	//Adding an Spring bean to map 'net.processone.grailssession.publisher' to EventPublisher class 
+   		'net.processone.grailssession.publisher'(net.processone.grailssession.EventPublisher) {
+   			
+   		}
+
     }
 
     def doWithDynamicMethods = { ctx ->
