@@ -24,9 +24,16 @@ Brief description of the plugin.
     def doWithWebDescriptor = { xml ->
 	    def listeners = xml.'listener'
 		
+	    listeners[listeners.size()-1] + {
+	    	'listener' {
+	    		log.info "Adding session context listener"
+	    		'listener-class'("net.processone.grailssession.SessionListener")  
+	    	}  
+	    }
+	    
 		listeners[listeners.size()-1] + {
 		  'listener' {
-		       log.info "Adding Activation context listener"
+		       log.info "Adding activation context listener"
 		       'listener-class'("net.processone.grailssession.ActivationListener")  
 		  }  
 		}
