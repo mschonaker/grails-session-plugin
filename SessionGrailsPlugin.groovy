@@ -22,7 +22,14 @@ Brief description of the plugin.
     def documentation = "http://grails.org/plugin/session"
 
     def doWithWebDescriptor = { xml ->
-        // TODO Implement additions to web.xml (optional), this event occurs before 
+	    def listeners = xml.'listener'
+		
+		listeners[listeners.size()-1] + {
+		  'listener' {
+		       log.info "Adding Activation context listener"
+		       'listener-class'("net.processone.grailssession.ActivationListener")  
+		  }  
+		}
     }
 
     def doWithSpring = {
