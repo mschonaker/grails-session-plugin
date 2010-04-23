@@ -1,3 +1,5 @@
+import net.processone.grailssession.*
+
 class SessionGrailsPlugin {
     // the plugin version
     def version = "0.1"
@@ -18,9 +20,15 @@ class SessionGrailsPlugin {
 Brief description of the plugin.
 '''
 
+    
     // URL to the plugin's documentation
     def documentation = "http://grails.org/plugin/session"
 
+    def watchedResources = [
+                          "file:./grails-app/conf/**/*SesssionListener.groovy",
+                          "file:./plugins/*/grails-app/conf/**/*SesssionListener.groovy"
+                  ]
+                  
     def doWithWebDescriptor = { xml ->
 	    def listeners = xml.'listener'
 		
@@ -39,12 +47,14 @@ Brief description of the plugin.
 		}
     }
 
+    def artefacts = [new SessionListenerArtefactHandler()]
+                     
     def doWithSpring = {
     	//Adding an Spring bean to map 'net.processone.grailssession.publisher' to EventPublisher class 
    		'net.processone.grailssession.publisher'(net.processone.grailssession.EventPublisher) {
-   			
    		}
-
+   		
+   		application.sessionListenerClasses.each { println it }
     }
 
     def doWithDynamicMethods = { ctx ->
