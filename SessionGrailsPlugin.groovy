@@ -1,5 +1,6 @@
 import net.processone.grailssession.*
-
+import org.springframework.beans.factory.config.MethodInvokingFactoryBean
+ 
 class SessionGrailsPlugin {
     // the plugin version
     def version = "0.1"
@@ -54,7 +55,10 @@ Brief description of the plugin.
    		'net.processone.grailssession.publisher'(net.processone.grailssession.EventPublisher) {
    		}
    		
-   		application.sessionListenerClasses.each { println it }
+   		application.sessionListenerClasses.each {jobClass ->
+   					configureJobBeans.delegate = delegate
+   					configureJobBeans(jobClass)
+        }
     }
 
     def doWithDynamicMethods = { ctx ->
@@ -74,5 +78,25 @@ Brief description of the plugin.
     def onConfigChange = { event ->
         // TODO Implement code that is executed when the project configuration changes.
         // The event is the same as for 'onChange'.
+    }
+    
+    def configureJobBeans = {jobClass ->
+		    def fullName = jobClass.fullName
+
+		    "${fullName}Class"(MethodInvokingFactoryBean) {
+		        targetObject = ref("grailsApplication", true)
+		        targetMethod = "getArtefact"
+		        arguments = [SessionListenerArtefactHandler.TYPE, jobClass.fullName]
+		    }
+		
+		    "${fullName}"(ref("${fullName}Class")) {bean ->
+		        bean.factoryMethod = "newInstance"
+		        bean.autowire = "byName"
+		        bean.scope = "prototype"
+		    }
+
+		    "${fullName}EventHandler"(SessionEventHandler) {
+		    	  sessionListener = ref(fullName)
+		    }
     }
 }
