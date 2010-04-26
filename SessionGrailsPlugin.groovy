@@ -13,12 +13,84 @@ class SessionGrailsPlugin {
             "grails-app/views/error.gsp"
     ]
 
-    // TODO Fill in these fields
-    def author = "Your name"
-    def authorEmail = ""
-    def title = "Plugin summary/headline"
+    def author = "Martín Schonaker, Santiago Martínez"
+    def authorEmail = "mschonaker@process-one.net; smartinez@process-one.net"
+    def title = "Adds several standard JEE session event handling"
     def description = '''\\
-Brief description of the plugin.
+In order to use the plugin, add any number of *SessionListener classes to the /grails-app/conf directory. For example:
+    	
+	class PrintlnSessionListener {
+    	
+    	def init = { session ->
+    		
+    		println "------------------------------"
+    		println "Session ${session.id} created"
+    		session.attributeNames.each {
+    			
+    			println "$it = ${session.getAttribute(it)}"
+    			
+    		}
+    		println "------------------------------"
+    	}
+    	
+    	def destroy = { session ->
+    		
+    		println "------------------------------"
+    		println "Session ${session.id} destroyed"
+    		session.attributeNames.each {
+    			
+    			println "$it = ${session.getAttribute(it)}"
+    			
+    		}
+    		println "------------------------------"
+    		
+    	}
+    	
+    	def activate = { session ->
+    		println "------------------------------"
+    		println "Session ${session.id} activated"
+    		session.attributeNames.each {
+    			
+    			println "$it = ${session.getAttribute(it)}"
+    			
+    		}
+    		println "------------------------------"
+    		
+    	}
+    	
+    	def passivate = { session ->
+    		println "------------------------------"
+    		println "Session ${session.id} will passivate"
+    		session.attributeNames.each {
+    			
+    			println "$it = ${session.getAttribute(it)}"
+    			
+    		}
+    		println "------------------------------"
+    		
+    	}
+    	
+    	def attributeAdded = { session, name, value ->
+    		println "------------------------------"
+    		println "Session ${session.id} attribute added"
+    		println "name = $name, value = $value"
+    		println "------------------------------"
+    	}
+    	
+    	def attributeRemoved = { session, name, value ->
+    		println "------------------------------"
+    		println "Session ${session.id} attribute removed"
+    		println "name = $name, old value = $value"
+    		println "------------------------------"
+    	}
+    	
+    	def attributeReplaced = { session, name, value ->
+    		println "------------------------------"
+    		println "Session ${session.id} attribute replaced"
+    		println "name = $name, old value = $value, value = ${session.getAttribute(name)}"
+    		println "------------------------------"
+    	}
+    }
 '''
 
     
