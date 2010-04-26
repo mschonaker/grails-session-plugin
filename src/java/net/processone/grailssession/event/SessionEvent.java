@@ -20,7 +20,7 @@ public abstract class SessionEvent extends ApplicationEvent {
 	public HttpSession getSession() {
 		return session;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.getClass().getName() + "[" + session.toString() + "]";

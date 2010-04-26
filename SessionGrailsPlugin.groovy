@@ -35,16 +35,23 @@ Brief description of the plugin.
 		
 	    listeners[listeners.size()-1] + {
 	    	'listener' {
-	    		log.info "Adding session context listener"
+	    		log.info "Adding session listener"
 	    		'listener-class'("net.processone.grailssession.SessionListener")  
 	    	}  
 	    }
 	    
 		listeners[listeners.size()-1] + {
 		  'listener' {
-		       log.info "Adding activation context listener"
+		       log.info "Adding session activation listener"
 		       'listener-class'("net.processone.grailssession.ActivationListener")  
 		  }  
+		}
+		
+		listeners[listeners.size()-1] + {
+			'listener' {
+				log.info "Adding session attribute listener"
+				'listener-class'("net.processone.grailssession.AttributeListener")  
+			}  
 		}
     }
 
