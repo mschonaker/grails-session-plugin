@@ -1,131 +1,185 @@
 INTRODUCTION
-	Session-grails-plugin aims to add several standard JEE session event handling which Spring/Grails aren't propagated trough the framework
+------------
+
+Session-grails-plugin aims to add standard JEE session event handling which
+is not being propagated through the Spring/Grails stack.
 	
+
 INSTALLATION
-	There are two way to install the plugin
-	
-	1) Grails way
-	   
-	   $ grails install-plugin grails-session-0.2.zip
-	   	 
-	2) by hand
+------------
+
+1) Download:
+
+You can download the full code from here:
 		
-	   Create the following directory structure in your project
+https://gitorious.process-one.net/grails-session-plugin/grails-session-plugin
+		
+git clone git+ssh://git@gitorious.process-one.net/grails-session-plugin/grails-session-plugin.git
+			
+2) Build:
+
+Once downloaded, run:
+
+grails package-plugin
+
+3) Integration with a Grails app:
+
+As any other plugin, there are several ways to install the plugin:
+
+1) Through a plugin repository:
 	   
-	   You-Project-Root
-	        |
-	        --> plugins 
-	               |
-                   --> session-0.2 <- put here grails-session-0.2.zip file and unzip it into it.
+$ grails install-plugin grails-session-0.2.zip
+	   	 
+2) In-place plugin:
+		
+Creating the following directory structure in your project
+	   
+Your-Project-Root
+|
+--> plugins 
+    |
+    --> session-0.2 <- put here grails-session-0.2.zip file and unzip it into
+                       it. The plugin.xml file among the rest, should be at the
+                       same level that the zip file.
 	    
-	   then add in your BuildConfig.groovy file
+then add in your BuildConfig.groovy file
 	   
-	   grails.plugin.location."session-0.2" = "plugins/session-0.2/"
+grails.plugin.location.'session-0.2' = 'plugins/session-0.2/'
 	   
-	   witch tells to Grails where to find this plugin
+witch tells to Grails where to find this plugin.
+
 
 USAGE
-	DOWNLOAD
-		You cand download the full code from here:
+-----
+
+In order to use the plugin, add any number of *SessionListener.groovy classes
+to the /grails-app/conf directory and the plugin will call to proper method.
+
+For instance:
 		
-		https://gitorious.process-one.net/grails-session-plugin/grails-session-plugin
-		
-		git clone git+ssh://git@gitorious.process-one.net/grails-session-plugin/grails-session-plugin.git
-			
-	BUILD
-		In order to use the plugin, add any number of *SessionListener classes to the /grails-app/conf directory and the plugin will call to proper method.
-		For example:
-		
-		class PrintlnSessionListener {
+class PrintlnSessionListener {
     	
-	    	def init = { session ->
-	    		
-	    		println "------------------------------"
-	    		println "Session ${session.id} created"
-	    		session.attributeNames.each {
-	    			
-	    			println "$it = ${session.getAttribute(it)}"
-	    			
-	    		}
-	    		println "------------------------------"
-	    	}
-	    	
-	    	def destroy = { session ->
-	    		
-	    		println "------------------------------"
-	    		println "Session ${session.id} destroyed"
-	    		session.attributeNames.each {
-	    			
-	    			println "$it = ${session.getAttribute(it)}"
-	    			
-	    		}
-	    		println "------------------------------"
-	    		
-	    	}
-	    	
-	    	def activate = { session ->
-	    		println "------------------------------"
-	    		println "Session ${session.id} activated"
-	    		session.attributeNames.each {
-	    			
-	    			println "$it = ${session.getAttribute(it)}"
-	    			
-	    		}
-	    		println "------------------------------"
-	    		
-	    	}
-	    	
-	    	def passivate = { session ->
-	    		println "------------------------------"
-	    		println "Session ${session.id} will passivate"
-	    		session.attributeNames.each {
-	    			
-	    			println "$it = ${session.getAttribute(it)}"
-	    			
-	    		}
-	    		println "------------------------------"
-	    		
-	    	}
-	    	
-	    	def attributeAdded = { session, name, value ->
-	    		println "------------------------------"
-	    		println "Session ${session.id} attribute added"
-	    		println "name = $name, value = $value"
-	    		println "------------------------------"
-	    	}
-	    	
-	    	def attributeRemoved = { session, name, value ->
-	    		println "------------------------------"
-	    		println "Session ${session.id} attribute removed"
-	    		println "name = $name, old value = $value"
-	    		println "------------------------------"
-	    	}
-	    	
-	    	def attributeReplaced = { session, name, value ->
-	    		println "------------------------------"
-	    		println "Session ${session.id} attribute replaced"
-	    		println "name = $name, old value = $value, value = ${session.getAttribute(name)}"
-	    		println "------------------------------"
-	    	}
-        }   
+ 	def init = { session ->
+
+ 		println "------------------------------"
+ 		println "Session ${session.id} created"
+ 		session.attributeNames.each {
 	
+   			println "$it = ${session.getAttribute(it)}"
+	    			
+   		}
+   		println "------------------------------"
+   	}
+	    	
+  def destroy = { session ->
+	    		
+		println "------------------------------"
+		println "Session ${session.id} destroyed"
+		session.attributeNames.each {
+	    			
+			println "$it = ${session.getAttribute(it)}"
+	    			
+		}
+		println "------------------------------"
+	    		
+	}
+	    	
+ 	def activate = { session ->
+ 	
+ 		println "------------------------------"
+ 		println "Session ${session.id} activated"
+ 		session.attributeNames.each {
+
+ 			println "$it = ${session.getAttribute(it)}"
+
+ 		}
+ 		println "------------------------------"
+ 		
+ 	}
+	    	
+ 	def passivate = { session ->
+ 	
+		println "------------------------------"
+ 		println "Session ${session.id} will passivate"
+ 		session.attributeNames.each {
+	    			
+ 			println "$it = ${session.getAttribute(it)}"
+	    			
+ 		}
+ 		
+ 		println "------------------------------"
+ 	}
+	    	
+	def attributeAdded = { session, name, value ->
 	
-	INTEGRATE WITH GRAILS
+ 		println "------------------------------"
+ 		println "Session ${session.id} attribute added"
+  	println "name = $name, value = $value"
+  	println "------------------------------"
+  	
+  }
+	    	
+  def attributeRemoved = { session, name, value ->
+  
+  	println "------------------------------"
+  	println "Session ${session.id} attribute removed"
+  	println "name = $name, old value = $value"
+  	println "------------------------------"
+  	
+  }
+
+  def attributeReplaced = { session, name, value ->
+  
+  	println "------------------------------"
+  	println "Session ${session.id} attribute replaced"
+  	println "name = $name, old value = $value, value = ${session.getAttribute(name)}"
+  	println "------------------------------"
+  	
+  }
+}
+
+The above listed methods are all the possible methods invoked for a 
+*SessionListener. Also all of the methods are optional.
 	
 KNOWN ISSUES
+------------
 
-	Session Listener is not called when a node start, this is a well know issues which its fixed in Tomcat 7 version.
+"activate" method is not invoked during a Tomcat "warm reload". This is when
+Tomcat recognises a war file changed in the filesystem and reloads the context.
+This is due to an existent Tomcat bug:
 
-	Detailed explanation here:
-		 
-	https://issues.apache.org/bugzilla/show_bug.cgi?id=48717
+https://issues.apache.org/bugzilla/show_bug.cgi?id=48717
+
+However, the plugin works correctly when Tomcat is fully stopped and restarted.
+	
 
 TODO
+----
 		
+- Edit metaclass for session objects passed as arguments so the 
+session.<attributeName> methods invoked from grails/groovy perform an implicit
+invocation to getAttribute/setAttribute methods from HttpServlet.
+
+- Add code (including test code) templates and Gant scripts to be able to invoke
+something like:
+grails create-session-listener <canonicalClassName>
+from the command line.
+
+- Add some test facility for integration tests (like a method in their
+metaclass) to be able programmatically fire session events during tests.
+
+- Hide reserved session attributes (such as the HttpSessionActivationListener)
+from the grails *SessionListeners. In order to do this, the HttpSession might
+have to be copied.
+
+- Improve synchronization implementation on context event delaying.
+
 	
 CONTACT
+-------
 
-	Any suggestion will be wellcome
+Suggestions are welcome:
 	
-	Martín Schonker - mschonaker@process-one.net
-	Santiago Martinez - smartinez@process-one.net
+Martín Schonker - mschonaker@process-one.net
+Santiago Martinez - smartinez@process-one.net
+
