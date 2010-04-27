@@ -1,12 +1,17 @@
 package net.processone.grailssession;
 
+import java.io.Serializable;
+
 import javax.servlet.http.HttpSessionActivationListener;
 import javax.servlet.http.HttpSessionEvent;
+
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.context.ApplicationContext;
 
-public class ActivationListener implements HttpSessionActivationListener {
+public class ActivationListener implements HttpSessionActivationListener, Serializable {
 
+	private static final long serialVersionUID = 824798789660803076L
+	;
 	public static final String APPLICATION_CONTEXT_PUBLISHER_BEAN = "net.processone.grailssession.publisher";
 
 	public void sessionDidActivate(HttpSessionEvent se) {
