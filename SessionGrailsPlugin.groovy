@@ -113,13 +113,6 @@ In order to use the plugin, add any number of *SessionListener classes to the /g
 	    }
 	    
 		listeners[listeners.size()-1] + {
-		  'listener' {
-		       log.info "Adding session activation listener"
-		       'listener-class'("net.processone.grailssession.ActivationListener")  
-		  }  
-		}
-		
-		listeners[listeners.size()-1] + {
 			'listener' {
 				log.info "Adding session attribute listener"
 				'listener-class'("net.processone.grailssession.AttributeListener")  
@@ -132,6 +125,11 @@ In order to use the plugin, add any number of *SessionListener classes to the /g
     def doWithSpring = {
     	//Adding an Spring bean to map 'net.processone.grailssession.publisher' to EventPublisher class 
    		'net.processone.grailssession.publisher'(net.processone.grailssession.EventPublisher) {
+   		}
+
+   		//Adding an Spring bean to map 'net.processone.grailssession.didActivateEventDelayerBean' to DidActivateEventDelayerBean class
+   		'net.processone.grailssession.didActivateEventDelayerBean'(net.processone.grailssession.DidActivateEventDelayerBean){
+   			
    		}
    		
    		application.sessionListenerClasses.each {jobClass ->
