@@ -24,7 +24,7 @@ public class ActivationListener implements HttpSessionActivationListener, Serial
 		
 		ServletContext context = se.getSession().getServletContext();
 		
-		//TODO 'queue' should be sinchronized out side of synchronized context block, maybe using ConcurrentLinkedQueue
+		//TODO 'queue' should be synchronized out side of synchronized context block, maybe using ConcurrentLinkedQueue
 		synchronized (context) {
 			
 			LinkedList<HttpSessionEvent> queue = (LinkedList<HttpSessionEvent>)context.getAttribute(APPLICATION_CONTEXT_EVENT_QUEUE);
@@ -38,6 +38,13 @@ public class ActivationListener implements HttpSessionActivationListener, Serial
 	}
 
 	public void sessionWillPassivate(HttpSessionEvent se) {
-
+		ApplicationContext context = WebApplicationContextUtils
+				.getWebApplicationContext(se.getSession().getServletContext());
+		Object bean = context.getBean(APPLICATION_CONTEXT_PUBLISHER_BEAN);
+	
+		if (bean != null) {
+			EventPublisher publisher = (EventPublisher) bean;
+			publisher.publishSessionWillPassivate(se.getSession());
+		}
 	}
 }
