@@ -155,6 +155,9 @@ However, the plugin works correctly when Tomcat is fully stopped and restarted.
 
 TODO
 ----
+
+- Implement SessionGrailsPlugin#onChange in order to reload changes in
+development environment.
 		
 - Edit metaclass for session objects passed as arguments so the 
 session.<attributeName> methods invoked from grails/groovy perform an implicit
