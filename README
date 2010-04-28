@@ -26,11 +26,11 @@ grails package-plugin
 
 As any other plugin, there are several ways to install the plugin:
 
-1) Through a plugin repository:
+a) Through a plugin repository:
 	   
 $ grails install-plugin grails-session-0.2.zip
 	   	 
-2) In-place plugin:
+b) In-place plugin:
 		
 Creating the following directory structure in your project
 	   
@@ -59,83 +59,83 @@ For instance:
 		
 class PrintlnSessionListener {
     	
- 	def init = { session ->
+    def init = { session ->
 
- 		println "------------------------------"
- 		println "Session ${session.id} created"
- 		session.attributeNames.each {
+        println "------------------------------"
+        println "Session ${session.id} created"
+        session.attributeNames.each {
 	
-   			println "$it = ${session.getAttribute(it)}"
-	    			
-   		}
-   		println "------------------------------"
-   	}
-	    	
-  def destroy = { session ->
-	    		
-		println "------------------------------"
-		println "Session ${session.id} destroyed"
-		session.attributeNames.each {
-	    			
-			println "$it = ${session.getAttribute(it)}"
-	    			
-		}
-		println "------------------------------"
-	    		
-	}
-	    	
- 	def activate = { session ->
- 	
- 		println "------------------------------"
- 		println "Session ${session.id} activated"
- 		session.attributeNames.each {
+            println "$it = ${session.getAttribute(it)}"
 
- 			println "$it = ${session.getAttribute(it)}"
-
- 		}
- 		println "------------------------------"
- 		
- 	}
+        }
+        println "------------------------------"
+    }
 	    	
- 	def passivate = { session ->
- 	
-		println "------------------------------"
- 		println "Session ${session.id} will passivate"
- 		session.attributeNames.each {
-	    			
- 			println "$it = ${session.getAttribute(it)}"
-	    			
- 		}
- 		
- 		println "------------------------------"
- 	}
-	    	
-	def attributeAdded = { session, name, value ->
+    def destroy = { session ->
 	
- 		println "------------------------------"
- 		println "Session ${session.id} attribute added"
-  	println "name = $name, value = $value"
-  	println "------------------------------"
-  	
-  }
-	    	
-  def attributeRemoved = { session, name, value ->
-  
-  	println "------------------------------"
-  	println "Session ${session.id} attribute removed"
-  	println "name = $name, old value = $value"
-  	println "------------------------------"
-  	
-  }
+        println "------------------------------"
+        println "Session ${session.id} destroyed"
+        session.attributeNames.each {
 
-  def attributeReplaced = { session, name, value ->
-  
-  	println "------------------------------"
-  	println "Session ${session.id} attribute replaced"
-  	println "name = $name, old value = $value, value = ${session.getAttribute(name)}"
-  	println "------------------------------"
+            println "$it = ${session.getAttribute(it)}"
+
+        }
+        println "------------------------------"
+
+    }
+	    	
+    def activate = { session ->
+ 	
+        println "------------------------------"
+        println "Session ${session.id} activated"
+        session.attributeNames.each {
+
+        println "$it = ${session.getAttribute(it)}"
+
+        }
+        println "------------------------------"
+ 
+    }
+
+    def passivate = { session ->
+ 	
+        println "------------------------------"
+        println "Session ${session.id} will passivate"
+        session.attributeNames.each {
+
+            println "$it = ${session.getAttribute(it)}"
+
+        }
+
+        println "------------------------------"
+    }
+	    	
+    def attributeAdded = { session, name, value ->
+	
+        println "------------------------------"
+        println "Session ${session.id} attribute added"
+        println "name = $name, value = $value"
+        println "------------------------------"
   	
-  }
+    }
+	    	
+    def attributeRemoved = { session, name, value ->
+  
+      	println "------------------------------"
+      	println "Session ${session.id} attribute removed"
+      	println "name = $name, old value = $value"
+      	println "------------------------------"
+  	
+    }
+
+    def attributeReplaced = { session, name, value ->
+  
+        println "------------------------------"
+        println "Session ${session.id} attribute replaced"
+        println "name = $name, old value = $value, value = ${session.getAttribute(name)}"
+        println "------------------------------"
+  	
+    }
 }
 
 The above listed methods are all the possible methods invoked for a 
@@ -183,6 +183,6 @@ CONTACT
 
 Suggestions are welcome:
 	
-Martín Schonker - mschonaker@process-one.net
+Martín Schonaker - mschonaker@process-one.net
 Santiago Martinez - smartinez@process-one.net
 
