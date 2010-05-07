@@ -162,6 +162,14 @@ development environment.
 - Edit metaclass for session objects passed as arguments so the 
 session.<attributeName> methods invoked from grails/groovy perform an implicit
 invocation to getAttribute/setAttribute methods from HttpServlet.
+Check out propertyMissing:
+http://docs.codehaus.org/display/GROOVY/Using+methodMissing+and+propertyMissing
+
+Hide reserved session attributes (such as the HttpSessionActivationListener)
+from the grails *SessionListeners. In order to do this, the HttpSession might
+have to be copied.
+
+Also override toString() to show the session as a groovy-flavored map.
 
 - Add code (including test code) templates and Gant scripts to be able to invoke
 something like:
@@ -171,11 +179,9 @@ from the command line.
 - Add some test facility for integration tests (like a method in their
 metaclass) to be able programmatically fire session events during tests.
 
-- Hide reserved session attributes (such as the HttpSessionActivationListener)
-from the grails *SessionListeners. In order to do this, the HttpSession might
-have to be copied.
-
 - Improve synchronization implementation on context event delaying.
+
+- Add static transactional = false property. Default to false.
 
 	
 CONTACT
